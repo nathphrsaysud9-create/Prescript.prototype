@@ -1,0 +1,344 @@
+@font-face {
+  font-family: "code";
+  src: url("../media/fonts/PixelifySans-Regular.woff2") format("woff2"),
+       url("../media/fonts/PixelifySans-Regular.woff") format("woff");
+}
+   
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0f0f0f;
+    color: #99caff; 
+    font-family: "code", monospace;
+} 
+#imageHolder {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+#buttonContainer {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+}
+    
+#buttonContainer button {
+    background: none;
+    border: none;
+    color: #99edff;
+    font-family: "code", monospace;
+    font-size: 35px;
+    cursor: pointer;
+    text-shadow:
+    0 0 10px rgba(153, 237, 255, 0.8),
+    0 0 20px rgba(153, 237, 255, 0.5),
+    0 0 40px rgba(0, 183, 235, 0.3);
+}
+    
+#buttonContainer button:hover {
+    opacity: 0.7;
+}
+
+
+/* Prescript editor */
+#managePrescriptsBtn {
+    color: #d7b7ff;
+}
+
+#managePrescriptsBtn:hover {
+    color: #ffffff;
+}
+
+body.prescript-editor-open {
+    overflow: hidden;
+}
+
+.prescript-editor[hidden] {
+    display: none;
+}
+
+.prescript-editor {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(4, 4, 10, 0.84);
+    backdrop-filter: blur(6px);
+}
+
+.prescript-editor-card {
+    display: flex;
+    flex-direction: column;
+    width: min(980px, 100%);
+    max-height: min(850px, 92vh);
+    overflow: hidden;
+    border: 1px solid rgba(153, 237, 255, 0.5);
+    background: #10131b;
+    color: #d9f6ff;
+    box-shadow: 0 0 30px rgba(0, 183, 235, 0.22), 0 0 90px rgba(136, 76, 255, 0.16);
+}
+
+.prescript-editor-header,
+.prescript-editor-toolbar,
+.prescript-editor-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 22px;
+}
+
+.prescript-editor-header {
+    border-bottom: 1px solid rgba(153, 237, 255, 0.16);
+}
+
+.prescript-editor-header h2 {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(25px, 4vw, 38px);
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+
+.prescript-editor-kicker {
+    margin: 0 0 4px;
+    color: #d7b7ff;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.prescript-editor-help,
+.prescript-editor-count {
+    margin: 4px 0 0;
+    color: #88a5b7;
+    font-size: 13px;
+}
+
+.prescript-close-btn,
+.prescript-secondary-btn,
+.prescript-reset-btn,
+.prescript-save-btn,
+.prescript-delete-btn {
+    border: 1px solid rgba(153, 237, 255, 0.45);
+    background: rgba(15, 24, 36, 0.85);
+    color: #c9f5ff;
+    font-family: "code", monospace;
+    cursor: pointer;
+    transition: background 160ms ease-out, border-color 160ms ease-out, color 160ms ease-out, transform 160ms ease-out;
+}
+
+.prescript-close-btn:active,
+.prescript-secondary-btn:active,
+.prescript-reset-btn:active,
+.prescript-save-btn:active,
+.prescript-delete-btn:active {
+    transform: scale(0.97);
+}
+
+.prescript-close-btn {
+    width: 38px;
+    height: 38px;
+    border-color: transparent;
+    background: transparent;
+    color: #88a5b7;
+    font-size: 28px;
+    line-height: 1;
+}
+
+.prescript-close-btn:hover {
+    color: #ffffff;
+}
+
+.prescript-secondary-btn,
+.prescript-reset-btn,
+.prescript-save-btn,
+.prescript-delete-btn {
+    padding: 9px 12px;
+    font-size: 14px;
+}
+
+.prescript-secondary-btn:hover,
+.prescript-delete-btn:hover {
+    border-color: #99edff;
+    background: rgba(0, 183, 235, 0.14);
+    color: #ffffff;
+}
+
+.prescript-save-btn {
+    border-color: #d7b7ff;
+    background: rgba(136, 76, 255, 0.22);
+    color: #f0ddff;
+}
+
+.prescript-save-btn:hover {
+    background: rgba(136, 76, 255, 0.38);
+    color: #ffffff;
+}
+
+.prescript-reset-btn {
+    border-color: rgba(255, 142, 173, 0.45);
+    background: transparent;
+    color: #ffb8ca;
+}
+
+.prescript-reset-btn:hover {
+    background: rgba(255, 80, 130, 0.12);
+    color: #ffd9e3;
+}
+
+.prescript-list {
+    min-height: 160px;
+    overflow-y: auto;
+    padding: 0 22px 10px;
+}
+
+.prescript-row {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: start;
+    padding: 16px 0;
+    border-top: 1px solid rgba(153, 237, 255, 0.12);
+}
+
+.prescript-row-number {
+    padding-top: 9px;
+    color: #6c8294;
+    font-size: 14px;
+}
+
+.prescript-row-fields {
+    min-width: 0;
+}
+
+.prescript-text-field,
+.prescript-number-fields label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: #91b3c4;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.prescript-text-field textarea,
+.prescript-number-fields input {
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid rgba(153, 237, 255, 0.25);
+    border-radius: 0;
+    outline: none;
+    background: #0a0d13;
+    color: #e4faff;
+    font-family: "code", monospace;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.prescript-text-field textarea {
+    min-height: 58px;
+    padding: 9px 10px;
+    resize: vertical;
+}
+
+.prescript-number-fields input {
+    padding: 8px 9px;
+}
+
+.prescript-text-field textarea:focus,
+.prescript-number-fields input:focus {
+    border-color: #99edff;
+    box-shadow: 0 0 0 2px rgba(153, 237, 255, 0.12);
+}
+
+.prescript-number-fields {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(70px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.prescript-delete-btn {
+    align-self: end;
+    border-color: rgba(255, 142, 173, 0.35);
+    color: #ffb8ca;
+}
+
+.prescript-empty-state {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 45px 12px;
+    color: #88a5b7;
+    text-align: center;
+}
+
+.prescript-empty-state strong {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.prescript-editor-footer {
+    border-top: 1px solid rgba(153, 237, 255, 0.16);
+}
+
+.prescript-editor-actions {
+    display: flex;
+    gap: 10px;
+}
+
+@media (max-width: 720px) {
+    .prescript-editor {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .prescript-editor-card {
+        max-height: 95vh;
+    }
+
+    .prescript-editor-header,
+    .prescript-editor-toolbar,
+    .prescript-editor-footer {
+        padding: 14px 16px;
+    }
+
+    .prescript-list {
+        padding: 0 16px 8px;
+    }
+
+    .prescript-row {
+        grid-template-columns: 30px minmax(0, 1fr);
+        gap: 8px;
+    }
+
+    .prescript-delete-btn {
+        grid-column: 2;
+        justify-self: start;
+    }
+
+    .prescript-number-fields {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+    }
+
+    .prescript-editor-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .prescript-editor-actions {
+        justify-content: flex-end;
+    }
+}
